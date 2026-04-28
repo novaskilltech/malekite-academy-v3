@@ -8,6 +8,12 @@ if (!process.env.DATABASE_URL) {
 
 const sql = neon(process.env.DATABASE_URL);
 const migration = readFileSync(new URL('../db/lesson-cache.sql', import.meta.url), 'utf8');
+const statements = migration
+  .split(';')
+  .map((statement) => statement.trim())
+  .filter(Boolean);
 
-await sql(migration);
+for (const statement of statements) {
+  await sql.query(statement);
+}
 console.log('Database migration completed.');
