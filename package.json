@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:vercel": "vercel dev",
+    "db:migrate": "node scripts/migrate-db.mjs",
     "secrets:check": "node scripts/check-secrets.mjs",
     "typecheck": "tsc --noEmit",
     "build": "vite build",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.34.0",
+    "@neondatabase/serverless": "^1.0.2",
     "lucide-react": "0.460.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"

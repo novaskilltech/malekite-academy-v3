@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import { Level, Language, LessonContent } from '../types';
+import { getCachedLesson, saveCachedLesson } from '../lib/lesson-cache';
 
 const SUPPORTED_LANGUAGES: Language[] = ['ar', 'fr', 'en'];
 const SUPPORTED_LEVELS = new Set(Object.values(Level));
@@ -138,6 +139,11 @@ export default async function handler(req: any, res: any) {
 
   try {
     const { topic, levelId, lang } = validatePayload(await parseRequestBody(req));
+    const cachedLesson = await getCachedLesson(topic, levelId, lang);
+    if (cachedLesson) {
+      return res.status(200).json(cachedLesson);
+    }
+
     const ai = new GoogleGenAI({ apiKey });
     const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
@@ -152,6 +158,7 @@ export default async function handler(req: any, res: any) {
 
     const data = JSON.parse(result.text || '{}') as LessonContent;
     assertLessonContent(data);
+    await saveCachedLesson(topic, levelId, lang, data, model);
 
     return res.status(200).json(data);
   } catch (error) {
