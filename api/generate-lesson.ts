@@ -1,8 +1,15 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { Level, Language, LessonContent } from '../types';
+import type { Language, LessonContent } from '../types';
+
+type SupportedLevel = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED' | 'EXPERT';
 
 const SUPPORTED_LANGUAGES: Language[] = ['ar', 'fr', 'en'];
-const SUPPORTED_LEVELS = new Set(Object.values(Level));
+const SUPPORTED_LEVELS = new Set<SupportedLevel>([
+  'BEGINNER',
+  'INTERMEDIATE',
+  'ADVANCED',
+  'EXPERT',
+]);
 
 const parseRequestBody = async (req: any) => {
   if (req.body && typeof req.body === 'object') return req.body;
@@ -19,7 +26,7 @@ const parseRequestBody = async (req: any) => {
 
 const validatePayload = (body: any) => {
   const topic = typeof body.topic === 'string' ? body.topic.trim() : '';
-  const levelId = body.levelId as Level;
+  const levelId = body.levelId as SupportedLevel;
   const lang = body.lang as Language;
 
   if (topic.length < 3 || topic.length > 240) {
@@ -43,7 +50,7 @@ const languageLabel = (lang: Language) => {
   return 'العربية';
 };
 
-const buildPrompt = (topic: string, levelId: Level, lang: Language) => `
+const buildPrompt = (topic: string, levelId: SupportedLevel, lang: Language) => `
 أنت مدرس فقه مالكي متخصص. أنشئ درسا منظما وآمنا تعليميا.
 
 الموضوع: "${topic}"
@@ -110,7 +117,7 @@ const responseSchema = {
 };
 
 const assertLessonContent = (data: LessonContent) => {
-  if (!Array.isArray(data.quiz) || data.quiz.length < 3) {
+  if (!Array.isArray(data.quiz) || data.quiz.length < 5) {
     throw new Error('Generated lesson has an invalid quiz');
   }
 
