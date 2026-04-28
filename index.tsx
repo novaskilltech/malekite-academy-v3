@@ -102,6 +102,157 @@ const loadProgress = (): UserProgress => {
   }
 };
 
+const buildOfflineLesson = (
+  topic: string,
+  levelId: Level,
+  lang: Language
+): LessonContent => {
+  if (lang === 'fr') {
+    return {
+      title: topic,
+      matn: 'Mode hors ligne : ce cours utilise une fiche locale afin que l application reste disponible sans API.',
+      body: `Ce cours introduit le theme "${topic}" selon une progression academique. L objectif est de retenir les definitions, les conditions, les cas pratiques et les erreurs frequentes avant de passer a l evaluation. Pour une lecon plus detaillee, ajoutez plus tard un endpoint serveur /api/generate-lesson avec une cle API protegee cote serveur.`,
+      detailedExamples: [
+        `Identifier la definition principale du theme : ${topic}.`,
+        'Distinguer les conditions, les obligations et les recommandations.',
+        'Comparer un cas simple avec un cas limite avant de conclure.',
+        'Relever les erreurs de pratique les plus frequentes.',
+        'Reviser le cours puis valider les acquis avec le quiz.'
+      ],
+      fiqhIssues: [
+        'Definition du sujet et limites du chapitre.',
+        'Conditions de validite et elements obligatoires.',
+        'Cas pratiques et exceptions usuelles.'
+      ],
+      fiqhRiddles: [
+        {
+          riddle: 'Quel est le premier reflexe avant de donner un jugement pratique ?',
+          answer: 'Qualifier correctement le cas, puis verifier ses conditions et ses exceptions.'
+        }
+      ],
+      evidence: 'Fiche locale : les preuves detaillees doivent etre completees par le professeur ou par le futur endpoint serveur.',
+      comparativeFiqh: `Niveau ${levelId}. Les divergences sont a etudier apres la maitrise de la regle principale.`,
+      references: ['Support local de revision', 'Programme academique malekite'],
+      quiz: [
+        {
+          question: `Quel est le theme de ce cours ?`,
+          options: [topic, 'Un chapitre sans rapport', 'Une question technique'],
+          correctAnswer: 0,
+          explanation: 'Le titre du cours indique le theme a maitriser.'
+        },
+        {
+          question: 'Que faut-il verifier avant d appliquer une regle ?',
+          options: ['Les conditions du cas', 'La couleur de la page', 'Le nombre de boutons'],
+          correctAnswer: 0,
+          explanation: 'Une regle s applique seulement apres qualification du cas et verification des conditions.'
+        },
+        {
+          question: 'Pourquoi cette fiche existe-t-elle ?',
+          options: ['Pour utiliser l app sans API', 'Pour exposer une cle secrete', 'Pour bloquer les cours'],
+          correctAnswer: 0,
+          explanation: 'Elle permet une utilisation stable sur Vercel sans backend IA.'
+        }
+      ]
+    };
+  }
+
+  if (lang === 'en') {
+    return {
+      title: topic,
+      matn: 'Offline mode: this lesson uses local content so the app remains usable without an API.',
+      body: `This lesson introduces "${topic}" with a structured study path. Focus on definitions, required conditions, practical cases, and common mistakes before taking the assessment. A richer generated lesson can be added later through a server-side /api/generate-lesson endpoint.`,
+      detailedExamples: [
+        `Identify the main definition for: ${topic}.`,
+        'Separate conditions, obligations, and recommendations.',
+        'Compare a simple case with a borderline case.',
+        'Review common practice mistakes.',
+        'Study the summary, then complete the quiz.'
+      ],
+      fiqhIssues: [
+        'Subject definition and chapter boundaries.',
+        'Validity conditions and required elements.',
+        'Practical cases and common exceptions.'
+      ],
+      fiqhRiddles: [
+        {
+          riddle: 'What is the first step before applying a practical ruling?',
+          answer: 'Identify the case correctly, then verify its conditions and exceptions.'
+        }
+      ],
+      evidence: 'Local study sheet: detailed evidences should be completed by a teacher or by the future server endpoint.',
+      comparativeFiqh: `Level ${levelId}. Comparative details should come after mastering the main rule.`,
+      references: ['Local revision sheet', 'Maliki academy curriculum'],
+      quiz: [
+        {
+          question: 'What is this lesson about?',
+          options: [topic, 'An unrelated chapter', 'A technical setting'],
+          correctAnswer: 0,
+          explanation: 'The lesson title identifies the subject to study.'
+        },
+        {
+          question: 'What should be checked before applying a rule?',
+          options: ['The case conditions', 'The page color', 'The number of buttons'],
+          correctAnswer: 0,
+          explanation: 'A rule is applied after identifying the case and checking its conditions.'
+        },
+        {
+          question: 'Why does this local lesson exist?',
+          options: ['To use the app without an API', 'To expose a secret key', 'To block lessons'],
+          correctAnswer: 0,
+          explanation: 'It keeps the Vercel app usable without an AI backend.'
+        }
+      ]
+    };
+  }
+
+  return {
+    title: topic,
+    matn: 'وَضْعٌ مَحَلِّيٌّ: هَذَا الدَّرْسُ مُتَاحٌ دُونَ اتِّصَالٍ بِوَاجِهَةِ API.',
+    body: `يُقَدِّمُ هَذَا الدَّرْسُ مَدْخَلًا مُنَظَّمًا لِمَوْضُوعِ: "${topic}". يَرْكُزُ الطَّالِبُ عَلَى تَحْرِيرِ التَّعْرِيفِ، وَضَبْطِ الشُّرُوطِ، وَفَهْمِ الأَمْثِلَةِ، وَتَجَنُّبِ الأَخْطَاءِ الشَّائِعَةِ. وَلِدَرْسٍ أَوْسَعَ، يُمْكِنُ لَاحِقًا إِضَافَةُ خَادِمٍ آمِنٍ لِـ /api/generate-lesson دُونَ كَشْفِ المِفْتَاحِ فِي المُتَصَفِّحِ.`,
+    detailedExamples: [
+      `تَحْدِيدُ التَّعْرِيفِ الأَسَاسِيِّ لِـ: ${topic}.`,
+      'التَّمْيِيزُ بَيْنَ الشُّرُوطِ وَالفَرَائِضِ وَالمَنْدُوبَاتِ.',
+      'مُقَارَنَةُ المِثَالِ الوَاضِحِ بِالحَالَةِ المُشْكِلَةِ.',
+      'مُرَاجَعَةُ الأَخْطَاءِ العَمَلِيَّةِ المُتَكَرِّرَةِ.',
+      'قِرَاءَةُ الخُلَاصَةِ ثُمَّ اجْتِيَازُ التَّقْوِيمِ.'
+    ],
+    fiqhIssues: [
+      'تَحْرِيرُ مَحَلِّ البَحْثِ وَحُدُودِ البَابِ.',
+      'ضَبْطُ شُرُوطِ الصِّحَّةِ وَالعَنَاصِرِ الوَاجِبَةِ.',
+      'تَنْزِيلُ القَاعِدَةِ عَلَى الأَمْثِلَةِ وَالنَّوَازِلِ البَسِيطَةِ.'
+    ],
+    fiqhRiddles: [
+      {
+        riddle: 'مَا أَوَّلُ مَا يَحْتَاجُهُ الطَّالِبُ قَبْلَ تَنْزِيلِ الحُكْمِ؟',
+        answer: 'تَصْوِيرُ المَسْأَلَةِ تَصْوِيرًا صَحِيحًا، ثُمَّ التَّحَقُّقُ مِنْ شُرُوطِهَا وَاسْتِثْنَاءَاتِهَا.'
+      }
+    ],
+    evidence: 'بِطَاقَةٌ مَحَلِّيَّةٌ لِلْمُرَاجَعَةِ: تُسْتَكْمَلُ الأَدِلَّةُ المُفَصَّلَةُ مِنَ المُدَرِّسِ أَوْ مِنَ الخَادِمِ الآمِنِ لَاحِقًا.',
+    comparativeFiqh: `المُسْتَوَى: ${levelId}. تُؤَخَّرُ المُقَارَنَةُ المُفَصَّلَةُ حَتَّى يَضْبِطَ الطَّالِبُ أَصْلَ المَسْأَلَةِ.`,
+    references: ['بِطَاقَةُ مُرَاجَعَةٍ مَحَلِّيَّةٍ', 'مَنْهَجُ الأَكَادِيمِيَّةِ المَالِكِيَّةِ'],
+    quiz: [
+      {
+        question: 'مَا مَوْضُوعُ هَذَا الدَّرْسِ؟',
+        options: [topic, 'بَابٌ غَيْرُ مُتَعَلِّقٍ', 'إِعْدَادٌ تِقْنِيٌّ'],
+        correctAnswer: 0,
+        explanation: 'عُنْوَانُ الدَّرْسِ يُحَدِّدُ المَوْضُوعَ المَطْلُوبَ ضَبْطُهُ.'
+      },
+      {
+        question: 'مَاذَا نُرَاجِعُ قَبْلَ تَطْبِيقِ القَاعِدَةِ؟',
+        options: ['شُرُوطَ المَسْأَلَةِ', 'لَوْنَ الصَّفْحَةِ', 'عَدَدَ الأَزْرَارِ'],
+        correctAnswer: 0,
+        explanation: 'لَا يُنَزَّلُ الحُكْمُ حَتَّى تُفْهَمَ الصُّورَةُ وَتُرَاجَعَ الشُّرُوطُ.'
+      },
+      {
+        question: 'لِمَاذَا وُضِعَ هَذَا الدَّرْسُ المَحَلِّيُّ؟',
+        options: ['لِتَعْمَلَ التَّطْبِيقَةُ دُونَ API', 'لِكَشْفِ المِفْتَاحِ السِّرِّيِّ', 'لِمَنْعِ الدُّرُوسِ'],
+        correctAnswer: 0,
+        explanation: 'الغَرَضُ أَنْ تَبْقَى التَّطْبِيقَةُ صَالِحَةً لِلِاسْتِعْمَالِ عَلَى Vercel دُونَ خَادِمِ ذَكَاءٍ اصطِنَاعِيٍّ.'
+      }
+    ]
+  };
+};
+
 const TRANSLATIONS = {
   ar: {
     title: 'الأَكَادِيمِيَّةُ المَالِكِيَّةُ',
@@ -313,7 +464,11 @@ const App = () => {
       window.scrollTo(0,0);
     } catch (err) {
       console.warn('Lesson generation failed:', err);
-      setError(t.errorDesc);
+      const offlineLesson = buildOfflineLesson(topic, levelId, progress.lang);
+      writeStorage(cacheKey, JSON.stringify(offlineLesson));
+      setLessonContent(offlineLesson);
+      setView('lesson');
+      window.scrollTo(0,0);
     } finally {
       setLoading(false);
     }
