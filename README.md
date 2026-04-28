@@ -36,19 +36,6 @@ For production on Vercel, set these in Project Settings -> Environment Variables
 ```env
 GEMINI_API_KEY=your_rotated_server_side_key
 GEMINI_MODEL=gemini-2.5-flash
-DATABASE_URL=your_vercel_marketplace_neon_connection_string
-```
-
-## Database
-
-Use the Vercel Marketplace Neon Postgres integration to stay inside the Vercel project workflow. Start with the Neon free tier, then add the SQL in `db/lesson-cache.sql`.
-
-The `lesson_cache` table stores generated lessons by topic, level, and language so repeated requests do not call Gemini again.
-
-After Neon is connected and `DATABASE_URL` is available locally, run:
-
-```bash
-npm run db:migrate
 ```
 
 Before pushing:
