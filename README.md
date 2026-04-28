@@ -19,11 +19,24 @@ View your app in AI Studio: https://ai.studio/apps/drive/1eHmnkEInq5OePebNdLHCH3
 3. Run the app:
    `npm run dev`
 
+To test Vercel serverless functions locally, use:
+
+```bash
+npm run dev:vercel
+```
+
 ## Secrets
 
 Do not commit `.env.local` or any real API key. This project is configured to ignore `*.local`.
 
 The frontend must never call Gemini directly with a browser-exposed key. Dynamic lesson generation must go through a server endpoint such as `POST /api/generate-lesson`, where `GEMINI_API_KEY` is read server-side only.
+
+For production on Vercel, set these in Project Settings -> Environment Variables:
+
+```env
+GEMINI_API_KEY=your_rotated_server_side_key
+GEMINI_MODEL=gemini-2.5-flash
+```
 
 Before pushing:
 

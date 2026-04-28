@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const root = process.cwd();
-const ignoredDirs = new Set(['.git', 'node_modules', 'dist', 'dist-ssr']);
+const ignoredDirs = new Set(['.git', '.vercel', 'node_modules', 'dist', 'dist-ssr']);
 const ignoredFiles = new Set(['.env', '.env.local', '.env.production', '.env.development']);
 const extensions = new Set([
   '.js',

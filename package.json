@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:vercel": "vercel dev",
     "secrets:check": "node scripts/check-secrets.mjs",
     "typecheck": "tsc --noEmit",
     "build": "vite build",
@@ -12,8 +13,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.3",
+    "@google/genai": "^1.34.0",
     "lucide-react": "0.460.0",
+    "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
